@@ -6,29 +6,39 @@ using System.Threading.Tasks;
 
 namespace CreateResume
 {
-    internal class Employee
+    internal class Employer
     {
-        public String Name { get; }  
-        public String Surname { get; }  
+        public String Name { get; }
+        public String Surname { get; }
         private String Patronymic;  //отчество
-        public DateTime Age { get; }
-        public Employee(string name, string surname, string patronymic, DateTime age)
+        public DateTime Age { get; set; }
+        public Employer(string name, string surname, string patronymic, DateTime age)
         {
             Name = name;
             Surname = surname;
             Patronymic = patronymic;
             Age = age;
         }
-    
-        public Employee(String[] strings)
+
+        public Employer(String[] strings, DateTime age)
         {
-            Name= strings[0];
-            Surname= strings[1];
-            Patronymic= strings[2];
+            Name = strings[0];
+            Surname = strings[1];
+            Patronymic = strings[2];
+            Age = age;
         }
-        public int CalcuteAge() 
+
+        public Employer()
         {
-            
+        }
+
+        public void Show()
+        {
+            MessageBox.Show(Name + " " + Surname + " " + Patronymic + " " + CalcuteAge());
+        }
+        public int CalcuteAge()
+        {
+
             var now = DateTime.Today;
             return now.Year - Age.Year - 1 +
                 ((now.Month > Age.Month || now.Month == Age.Month && now.Day >= Age.Day) ? 1 : 0);
