@@ -1,8 +1,6 @@
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace CreateResume
 {
@@ -108,12 +106,12 @@ namespace CreateResume
 
         private bool ReadyToContinue()
         {
-            if (CheckField.CheckedTextBoxToFillIn(NameSurnamePatronomic_textBox, PhoneNomber_textBox, Email_textBox) &&
+            if (CheckField.CheckedTextBoxToFillIn(NameSurnamePatronomic_textBox, PhoneNomber_textBox, Email_textBox) &
            CheckField.CheckedListBoxToTheSelectedElement(Country_checkedListBox, Education_checkedListBox, FillMethod_checkedListBox))
             {
-                if (CheckField.CheckNSPtoCorrectFill(NameSurnamePatronomic_textBox.Text) &&
-                CheckField.CheckPhoneNumber(PhoneNomber_textBox.Text) &&
-                CheckField.IsValidEmail(Email_textBox.Text))
+                if (CheckField.CheckNSPtoCorrectFill(NameSurnamePatronomic_textBox) &
+                CheckField.CheckPhoneNumber(PhoneNomber_textBox) &
+                CheckField.IsValidEmail(Email_textBox))
                 {
                     return true;
                 }
@@ -124,11 +122,19 @@ namespace CreateResume
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (ReadyToContinue())
+            //if (ReadyToContinue())
             {
                 MessageBox.Show("OK");
+                var helper=new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
+                var items=new Dictionary<string, string> 
+                {
+                    { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
+                    { "<>",PhoneNomber_textBox.Text}
+                };
+
+                helper.Process(items);
             }
-            else
+            //else
             {
                 MessageBox.Show("NOT");
             }

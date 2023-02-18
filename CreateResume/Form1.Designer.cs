@@ -242,6 +242,7 @@
             // 
             // Country_checkedListBox
             // 
+            this.Country_checkedListBox.BackColor = System.Drawing.SystemColors.Window;
             this.Country_checkedListBox.CheckOnClick = true;
             this.Country_checkedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Country_checkedListBox.FormattingEnabled = true;

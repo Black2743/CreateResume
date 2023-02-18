@@ -20,10 +20,11 @@ namespace CreateResume
                 else
                 {
                     b = false;
-                    break;
+                    break;                
                 }
             }
             return b;
+
         }
         public static bool CheckedTextBoxToFillIn(params TextBox[] textBoxes)  //проверка, существуют ли текст в полях
         {
@@ -42,8 +43,9 @@ namespace CreateResume
             }
             return b;
         }
-        public static bool CheckPhoneNumber(string number)  //проверка, правильно ли записан номер телефона
+        public static bool CheckPhoneNumber(TextBox textBox)  //проверка, правильно ли записан номер телефона
         {
+            String number = textBox.Text;
             if (Regex.IsMatch(number, "^37529[0-9]{7}$") || Regex.IsMatch(number, "^37525[0-9]{7}$")
                 || Regex.IsMatch(number, "^8025[0-9]{7}$") || Regex.IsMatch(number, "^8025[0-9]{7}$")
                 || Regex.IsMatch(number, "^8044[0-9]{7}$") || Regex.IsMatch(number, "^37544[0-9]{7}$")
@@ -53,26 +55,37 @@ namespace CreateResume
                 || Regex.IsMatch(number, @"^\+?375(29|33|25|44)\d{7}$")
                 )
             {
+                textBox.BackColor= Color.Green;
                 return true;
             }
             else
             {
+                textBox.BackColor = Color.Red;
                 return false;
             }
         }
-        public static bool IsValidEmail(String strIn)
+        public static bool IsValidEmail(TextBox textBox)
         {
             // возвращает 
-
-            return Regex.IsMatch(strIn,
+            String strIn = textBox.Text;
+            if(Regex.IsMatch(strIn,
                        @"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))" +
-                       @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
+                       @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$")) { 
+                textBox.BackColor=Color.Green;
+                return true; }
+            else
+            {
+                textBox.BackColor= Color.Red;
+                return false;
+            }
+           
         }
 
-        public static bool CheckNSPtoCorrectFill(String s) //проверка, правильно ли заполнено поле ФИО(NSP)
+        public static bool CheckNSPtoCorrectFill(TextBox textBox ) //проверка, правильно ли заполнено поле ФИО(NSP)
         {
+            String NSP = textBox.Text;
             string test = "";
-            string[] arra = s.Split(' ', '\n', 'r');
+            string[] arra = NSP.Split(' ', '\n', 'r');
             foreach (string i in arra)
             {
                 if (i != string.Empty)
@@ -83,15 +96,18 @@ namespace CreateResume
             arra = test.Split('|');
             if (arra.Length != 4)
             {
+                textBox.BackColor= Color.Red;
                 return false;
             }
-            foreach (char c in s)
+            foreach (char c in NSP)
             {
                 if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == 32|| ((c >= 'а' && c <= 'я') || (c >= 'А' && c <= 'Я'))))
                 {
+                    textBox.BackColor= Color.Red;
                     return false;
                 }
             }
+            textBox.BackColor= Color.Green;
             return true;
         }
 
