@@ -43,7 +43,7 @@ namespace CreateResume
             }
             return b;
         }
-        public static bool CheckPhoneNumber(TextBox textBox)  //проверка, правильно ли записан номер телефона
+        public static bool CheckPhoneNumber(ref TextBox textBox)  //проверка, правильно ли записан номер телефона
         {
             String number = textBox.Text;
             if (Regex.IsMatch(number, "^37529[0-9]{7}$") || Regex.IsMatch(number, "^37525[0-9]{7}$")
@@ -64,7 +64,7 @@ namespace CreateResume
                 return false;
             }
         }
-        public static bool IsValidEmail(TextBox textBox)
+        public static bool IsValidEmail(ref TextBox textBox)
         {
             // возвращает 
             String strIn = textBox.Text;
@@ -81,7 +81,7 @@ namespace CreateResume
            
         }
 
-        public static bool CheckNSPtoCorrectFill(TextBox textBox ) //проверка, правильно ли заполнено поле ФИО(NSP)
+        public static bool CheckNSPtoCorrectFill(ref TextBox textBox ) //проверка, правильно ли заполнено поле ФИО(NSP)
         {
             String NSP = textBox.Text;
             string test = "";

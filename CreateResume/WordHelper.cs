@@ -4,7 +4,7 @@
     {
         private FileInfo _fileInfo;
 
-        public WordHelper() { }
+  
         public WordHelper(string word)
         {
             if (File.Exists(word))

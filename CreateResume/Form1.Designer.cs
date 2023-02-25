@@ -223,7 +223,7 @@
             this.Continue_button.TabIndex = 18;
             this.Continue_button.Text = "Продолжить";
             this.Continue_button.UseVisualStyleBackColor = true;
-            this.Continue_button.Click += new System.EventHandler(this.button1_Click);
+            this.Continue_button.Click += new System.EventHandler(this.button1_ClickAsync);
             // 
             // FillMethod_checkedListBox
             // 
@@ -233,7 +233,7 @@
             this.FillMethod_checkedListBox.Items.AddRange(new object[] {
             "Автоматически",
             "В ручную",
-            "Из docx файла"});
+            "Из файла(doc,docx,txt)"});
             this.FillMethod_checkedListBox.Location = new System.Drawing.Point(230, 363);
             this.FillMethod_checkedListBox.Name = "FillMethod_checkedListBox";
             this.FillMethod_checkedListBox.Size = new System.Drawing.Size(676, 70);

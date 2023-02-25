@@ -55,9 +55,9 @@ namespace CreateResume
                 }
             }
         }
-        private string callOpenAI(int tokens, string input, string engine, double temperature, int topP, int frequencyPenalty, int presencePenalty)
+        private async Task<string> callOpenAI(int tokens, string input, string engine, double temperature, int topP, int frequencyPenalty, int presencePenalty)
         {
-            var openAiKey = "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";
+            var openAiKey = "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";
             var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
             try
             {
@@ -71,7 +71,7 @@ namespace CreateResume
                         }
                         else
                         {
-                            return ("openAiKey is null. Cannot perform runtime binding.");
+                            return await Task.FromResult("openAiKey is null. Cannot perform runtime binding.");
 
                         }
                         if (input != null)
@@ -83,10 +83,10 @@ namespace CreateResume
                         }
                         else
                         {
-                            return ("input is null. Cannot perform runtime binding.");
+                            return await Task.FromResult("input is null. Cannot perform runtime binding.");
 
                         }
-                        var response = httpClient.SendAsync(request).Result;
+                        var response =  Task.FromResult(await httpClient.SendAsync(request)).Result;
                         var json = response.Content.ReadAsStringAsync().Result;
                         dynamic dynObj = JsonConvert.DeserializeObject(json);
                         if (dynObj != null)
@@ -98,20 +98,20 @@ namespace CreateResume
             }
             catch (Exception ex)
             {
-                return (ex.ToString());
+                return await Task.FromResult(ex.ToString());
             }
-            return "CRASH";
+            return await Task.FromResult("CRASH");
 
         }
 
         private bool ReadyToContinue()
         {
             if (CheckField.CheckedTextBoxToFillIn(NameSurnamePatronomic_textBox, PhoneNomber_textBox, Email_textBox) &
-           CheckField.CheckedListBoxToTheSelectedElement(Country_checkedListBox, Education_checkedListBox, FillMethod_checkedListBox))
+            CheckField.CheckedListBoxToTheSelectedElement(Country_checkedListBox, Education_checkedListBox, FillMethod_checkedListBox))
             {
-                if (CheckField.CheckNSPtoCorrectFill(NameSurnamePatronomic_textBox) &
-                CheckField.CheckPhoneNumber(PhoneNomber_textBox) &
-                CheckField.IsValidEmail(Email_textBox))
+                if (CheckField.CheckNSPtoCorrectFill(ref NameSurnamePatronomic_textBox) &
+                CheckField.CheckPhoneNumber(ref PhoneNomber_textBox) &
+                CheckField.IsValidEmail(ref Email_textBox))
                 {
                     return true;
                 }
@@ -120,31 +120,110 @@ namespace CreateResume
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_ClickAsync(object sender, EventArgs e)
         {
+
             //if (ReadyToContinue())
-            {
-                MessageBox.Show("OK");
-                var helper=new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
-                var items=new Dictionary<string, string> 
-                {
-                    { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
-                    { "<>",PhoneNomber_textBox.Text}
-                };
+            //{
 
-                helper.Process(items);
-            }
+            //    var helper = new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
+            //    var items = new Dictionary<string, string>
+            //    {
+            //        { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
+            //        { "<PHONE>",PhoneNomber_textBox.Text},
+            //        { "<EMAIL>",Email_textBox.Text},
+            //        { "<COUNTRY>",(string)Country_checkedListBox.CheckedItems[0]},
+            //        { "<EDUCATIO_TYPE>",(string)Education_checkedListBox.CheckedItems[0]},
+            //    };
+
+
+
+            //helper.Process(items);
+            //}
             //else
-            {
-                MessageBox.Show("NOT");
-            }
-            //String country = new((string?)Country_checkedListBox.SelectedItem);
-            //String education = new((string?)Country_checkedListBox.SelectedItem);
-            //String fillMethod = new((string?)Country_checkedListBox.SelectedItem);
+            //{
+            //    MessageBox.Show("NOT");
+            //}
 
-            //String strMessage = "напиши резюме для "+NameSurnamePatronomic_textBox.Text+" с навыками с++ java python css Mysql с неоконченным высшим образованием";
-            //var answer = callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
+            // MethodOfWriting(new((string?)FillMethod_checkedListBox.SelectedItem));
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = 1000;
+            int secondsElapsed = 0;
+            timer.Elapsed += (sender, e) =>
+            {
+                // Увеличиваем счетчик секунд на 1
+                secondsElapsed++;
+            };
+            timer.Start();
+            
+            string result = Microsoft.VisualBasic.Interaction.InputBox("Введите ваши навыки:", "Автоматически");
+            String strMessage = "напиши резюме для " + NameSurnamePatronomic_textBox.Text + " с навыками " + result;
+            var answer = await callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
+            MessageBox.Show(answer);
+            timer.Stop();
+            MessageBox.Show(secondsElapsed.ToString());
+
         }
+        String OpenFileDialogAndGetFileType(ref String fileContent, ref String filePath)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "Document files (*.doc,*.docx)|*.doc;*.docx|txt files (*.txt)|*.txt|All files (*.*)|*.* ";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+                string extension = Path.GetExtension(filePath);
+                return extension.ToLower();
+            }
+
+        }
+        private async Task<string> WaitForResultAsync(String strMessage)
+        {
+            string result = await callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
+            return result;
+        }
+        void MethodOfWriting(String method)
+        {
+
+            int size = method.Length;
+            if (size == 13)
+            {
+                string result = Microsoft.VisualBasic.Interaction.InputBox("Введите ваши навыки:", "Автоматически");
+                String strMessage = "напиши резюме для " + NameSurnamePatronomic_textBox.Text + " с навыками " + result;
+                var answer = callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
+
+            }
+
+            else if (size == 8)
+            {
+                string result = Microsoft.VisualBasic.Interaction.InputBox("Введите информацию о себе:", "О себе");
+            }
+            else
+            {
+                String? fileContent = null;
+                String? filePath = null;
+                String fileType = OpenFileDialogAndGetFileType(fileContent: ref fileContent, filePath: ref filePath);
+                MessageBox.Show(fileContent);
+                MessageBox.Show(filePath);
+                MessageBox.Show(fileType);
+            }
+
+        }
+
 
 
 
