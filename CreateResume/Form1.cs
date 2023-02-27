@@ -1,6 +1,9 @@
+using Microsoft.Office.Interop.Word;
 using Newtonsoft.Json;
 using System.Globalization;
+using System.IO;
 using System.Net.Http.Headers;
+using System.Windows.Forms;
 
 namespace CreateResume
 {
@@ -71,7 +74,7 @@ namespace CreateResume
                         }
                         else
                         {
-                            return await Task.FromResult("openAiKey is null. Cannot perform runtime binding.");
+                            return await System.Threading.Tasks.Task.FromResult("openAiKey is null. Cannot perform runtime binding.");
 
                         }
                         if (input != null)
@@ -83,10 +86,10 @@ namespace CreateResume
                         }
                         else
                         {
-                            return await Task.FromResult("input is null. Cannot perform runtime binding.");
+                            return await System.Threading.Tasks.Task.FromResult("input is null. Cannot perform runtime binding.");
 
                         }
-                        var response =  Task.FromResult(await httpClient.SendAsync(request)).Result;
+                        var response = System.Threading.Tasks.Task.FromResult(await httpClient.SendAsync(request)).Result;
                         var json = response.Content.ReadAsStringAsync().Result;
                         dynamic dynObj = JsonConvert.DeserializeObject(json);
                         if (dynObj != null)
@@ -98,9 +101,9 @@ namespace CreateResume
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(ex.ToString());
+                return await System.Threading.Tasks.Task.FromResult(ex.ToString());
             }
-            return await Task.FromResult("CRASH");
+            return await System.Threading.Tasks.Task.FromResult("CRASH");
 
         }
 
@@ -119,57 +122,95 @@ namespace CreateResume
             return false;
         }
 
-
-        private async void button1_ClickAsync(object sender, EventArgs e)
+        public static string Show(string caption, string prompt, string defaultValue = "")
+        {
+            Form promptForm = new Form() { Width = 500, Height = 400 };
+            promptForm.Text = caption;
+            Label promptLabel = new Label() { Left = 50, Top = 20, Text = prompt };
+            TextBox inputBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 200, Text = defaultValue, Multiline = true };
+            Button okButton = new Button() { Text = "ОК", Left = 250, Width = 100, Height = 50, Top = 280 };
+            Button cancelButton = new Button() { Text = "Отмена", Left = 360, Width = 100, Height = 50, Top = 280 };
+            okButton.Click += (sender, e) => { promptForm.DialogResult = DialogResult.OK; };
+            cancelButton.Click += (sender, e) => { promptForm.DialogResult = DialogResult.Cancel; };
+            promptForm.Controls.Add(promptLabel);
+            promptForm.Controls.Add(inputBox);
+            promptForm.Controls.Add(okButton);
+            promptForm.Controls.Add(cancelButton);
+            promptForm.AcceptButton = okButton;
+            promptForm.CancelButton = cancelButton;
+            promptForm.StartPosition = FormStartPosition.CenterScreen;
+            promptForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+            promptForm.MaximizeBox = false;
+            promptForm.MinimizeBox = false;
+            string result = promptForm.ShowDialog() == DialogResult.OK ? inputBox.Text : "";
+            return result;
+        }
+        private async void button1_Click(object sender, EventArgs e)
         {
 
+            WorkForm workForm= new WorkForm();
+            workForm.ShowDialog();
             //if (ReadyToContinue())
             //{
 
             //    var helper = new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
             //    var items = new Dictionary<string, string>
             //    {
-            //        { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
-            //        { "<PHONE>",PhoneNomber_textBox.Text},
-            //        { "<EMAIL>",Email_textBox.Text},
-            //        { "<COUNTRY>",(string)Country_checkedListBox.CheckedItems[0]},
-            //        { "<EDUCATIO_TYPE>",(string)Education_checkedListBox.CheckedItems[0]},
+            //            { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
+            //            { "<PHONE>",PhoneNomber_textBox.Text},
+            //            { "<EMAIL>",Email_textBox.Text},
+            //            { "<COUNTRY>",(string)Country_checkedListBox.CheckedItems[0]},
+            //            { "<EDUCATIO_TYPE>",(string)Education_checkedListBox.CheckedItems[0]},
+            //            {"<EXPIRIENSE>",await MethodOfWriting((string)FillMethod_checkedListBox.CheckedItems[0])},
+
             //    };
 
 
 
-            //helper.Process(items);
+            //    helper.Process(items);
             //}
             //else
             //{
             //    MessageBox.Show("NOT");
             //}
 
-            // MethodOfWriting(new((string?)FillMethod_checkedListBox.SelectedItem));
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 1000;
-            int secondsElapsed = 0;
-            timer.Elapsed += (sender, e) =>
-            {
-                // Увеличиваем счетчик секунд на 1
-                secondsElapsed++;
-            };
-            timer.Start();
-            
-            string result = Microsoft.VisualBasic.Interaction.InputBox("Введите ваши навыки:", "Автоматически");
-            String strMessage = "напиши резюме для " + NameSurnamePatronomic_textBox.Text + " с навыками " + result;
-            var answer = await callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
-            MessageBox.Show(answer);
-            timer.Stop();
-            MessageBox.Show(secondsElapsed.ToString());
-
         }
-        String OpenFileDialogAndGetFileType(ref String fileContent, ref String filePath)
+        private String GetAllInFile(ref String filePath, ref String fileType)
+        {
+            String fileContent = "";
+            var fileStream = File.OpenRead(filePath);
+            if (fileType.Length == 4)
+            {
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    fileContent = reader.ReadToEnd();
+                }
+
+            }
+            else
+            {
+                Microsoft.Office.Interop.Word.Application word = new Microsoft.Office.Interop.Word.Application();
+                // Открытие файла
+                Document doc = word.Documents.Open(filePath);
+
+                // Чтение содержимого документа
+                fileContent = doc.Content.Text;
+
+                // Закрытие документа и приложения
+                doc.Close();
+                word.Quit();
+
+
+            }
+
+            return fileContent;
+        }
+        private String OpenFileDialogAndGetFileType(ref String filePath)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "Document files (*.doc,*.docx)|*.doc;*.docx|txt files (*.txt)|*.txt|All files (*.*)|*.* ";
+                openFileDialog.Filter = "Document files (*.docx)|*.docx|txt files (*.txt)|*.txt|All files (*.*)|*.* ";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
@@ -178,15 +219,14 @@ namespace CreateResume
                     //Get the path of specified file
                     filePath = openFileDialog.FileName;
 
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
+                }
+                else
+                {
+                    MessageBox.Show("Вы не выбрали файл");
+                    return null;
                 }
                 string extension = Path.GetExtension(filePath);
+
                 return extension.ToLower();
             }
 
@@ -196,31 +236,33 @@ namespace CreateResume
             string result = await callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
             return result;
         }
-        void MethodOfWriting(String method)
+        async Task<String> MethodOfWriting(String method)
         {
 
             int size = method.Length;
             if (size == 13)
             {
-                string result = Microsoft.VisualBasic.Interaction.InputBox("Введите ваши навыки:", "Автоматически");
+                string result = Show("Введите ваши навыки:", "Автоматически");
                 String strMessage = "напиши резюме для " + NameSurnamePatronomic_textBox.Text + " с навыками " + result;
-                var answer = callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
-
+                var answer = await callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
+                return await System.Threading.Tasks.Task.FromResult(answer);
             }
-
-            else if (size == 8)
+            else if (size == 7)
             {
-                string result = Microsoft.VisualBasic.Interaction.InputBox("Введите информацию о себе:", "О себе");
+                string result = Show("Введите информацию о себе:", "О себе");
+                return await System.Threading.Tasks.Task.FromResult(result);
             }
-            else
+
+
+            String? filePath = null;
+            String? fileContent = null;
+            String fileType = OpenFileDialogAndGetFileType(filePath: ref filePath);
+            if (fileType != null)
             {
-                String? fileContent = null;
-                String? filePath = null;
-                String fileType = OpenFileDialogAndGetFileType(fileContent: ref fileContent, filePath: ref filePath);
-                MessageBox.Show(fileContent);
-                MessageBox.Show(filePath);
-                MessageBox.Show(fileType);
+                fileContent = GetAllInFile(filePath: ref filePath, ref fileType);
             }
+
+            return await System.Threading.Tasks.Task.FromResult(fileContent);
 
         }
 
