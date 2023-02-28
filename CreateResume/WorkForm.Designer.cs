@@ -34,12 +34,13 @@
             this.labelCompanyLocation = new System.Windows.Forms.Label();
             this.labelCompanyExpiriense = new System.Windows.Forms.Label();
             this.labelWorkTime = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBoxCompanyName = new System.Windows.Forms.TextBox();
+            this.textBoxCompanyLocation = new System.Windows.Forms.TextBox();
+            this.textBoxCompanyExpiriense = new System.Windows.Forms.TextBox();
             this.dateTimePickerWorkEnd = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerWorkStar = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonWorkContinue = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,30 +102,30 @@
             this.labelWorkTime.TabIndex = 5;
             this.labelWorkTime.Text = "Срок работы";
             // 
-            // textBox1
+            // textBoxCompanyName
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(232, 36);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(565, 27);
-            this.textBox1.TabIndex = 6;
+            this.textBoxCompanyName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxCompanyName.Location = new System.Drawing.Point(232, 36);
+            this.textBoxCompanyName.Name = "textBoxCompanyName";
+            this.textBoxCompanyName.Size = new System.Drawing.Size(565, 27);
+            this.textBoxCompanyName.TabIndex = 6;
             // 
-            // textBox2
+            // textBoxCompanyLocation
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(232, 69);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(565, 27);
-            this.textBox2.TabIndex = 7;
+            this.textBoxCompanyLocation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxCompanyLocation.Location = new System.Drawing.Point(232, 69);
+            this.textBoxCompanyLocation.Name = "textBoxCompanyLocation";
+            this.textBoxCompanyLocation.Size = new System.Drawing.Size(565, 27);
+            this.textBoxCompanyLocation.TabIndex = 7;
             // 
-            // textBox3
+            // textBoxCompanyExpiriense
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Location = new System.Drawing.Point(232, 102);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(565, 131);
-            this.textBox3.TabIndex = 8;
+            this.textBoxCompanyExpiriense.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxCompanyExpiriense.Location = new System.Drawing.Point(232, 102);
+            this.textBoxCompanyExpiriense.Multiline = true;
+            this.textBoxCompanyExpiriense.Name = "textBoxCompanyExpiriense";
+            this.textBoxCompanyExpiriense.Size = new System.Drawing.Size(565, 131);
+            this.textBoxCompanyExpiriense.TabIndex = 8;
             // 
             // dateTimePickerWorkEnd
             // 
@@ -150,32 +151,45 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.dateTimePickerWorkStar, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.textBox3, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxCompanyExpiriense, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.labelWorkPosition, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxCompanyLocation, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.labelCompanyName, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxCompanyName, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.labelCompanyLocation, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.textBoxWorkPosition, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelCompanyExpiriense, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.labelWorkTime, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.buttonWorkContinue, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 283);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 357);
             this.tableLayoutPanel1.TabIndex = 11;
+            // 
+            // buttonWorkContinue
+            // 
+            this.buttonWorkContinue.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonWorkContinue.Location = new System.Drawing.Point(232, 272);
+            this.buttonWorkContinue.Name = "buttonWorkContinue";
+            this.buttonWorkContinue.Size = new System.Drawing.Size(565, 82);
+            this.buttonWorkContinue.TabIndex = 11;
+            this.buttonWorkContinue.Text = "Продолжить";
+            this.buttonWorkContinue.UseVisualStyleBackColor = true;
+            this.buttonWorkContinue.Click += new System.EventHandler(this.button1_Click);
             // 
             // WorkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 283);
+            this.ClientSize = new System.Drawing.Size(800, 357);
             this.Controls.Add(this.dateTimePickerWorkEnd);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "WorkForm";
@@ -195,11 +209,12 @@
         private Label labelCompanyLocation;
         private Label labelCompanyExpiriense;
         private Label labelWorkTime;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private TextBox textBoxCompanyName;
+        private TextBox textBoxCompanyLocation;
+        private TextBox textBoxCompanyExpiriense;
         private DateTimePicker dateTimePickerWorkEnd;
         private DateTimePicker dateTimePickerWorkStar;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button buttonWorkContinue;
     }
 }

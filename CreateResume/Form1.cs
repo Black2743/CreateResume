@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace CreateResume
 {
+    
     public partial class Form1 : Form
     {
         public Form1()
@@ -148,26 +149,27 @@ namespace CreateResume
         private async void button1_Click(object sender, EventArgs e)
         {
 
-            WorkForm workForm= new WorkForm();
-            workForm.ShowDialog();
+
             //if (ReadyToContinue())
             //{
+           
 
-            //    var helper = new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
-            //    var items = new Dictionary<string, string>
-            //    {
-            //            { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
-            //            { "<PHONE>",PhoneNomber_textBox.Text},
-            //            { "<EMAIL>",Email_textBox.Text},
-            //            { "<COUNTRY>",(string)Country_checkedListBox.CheckedItems[0]},
-            //            { "<EDUCATIO_TYPE>",(string)Education_checkedListBox.CheckedItems[0]},
-            //            {"<EXPIRIENSE>",await MethodOfWriting((string)FillMethod_checkedListBox.CheckedItems[0])},
+            
+            var items = new Dictionary<String, String>
+            {
+                 { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
+                 { "<PHONE>",PhoneNomber_textBox.Text},
+                 { "<EMAIL>",Email_textBox.Text},
+                 { "<COUNTRY>",(string)Country_checkedListBox.CheckedItems[0]},
+                 { "<EDUCATIO_TYPE>",(string)Education_checkedListBox.CheckedItems[0]},
+                 { "<EXPIRIENSE>",await MethodOfWriting((string)FillMethod_checkedListBox.CheckedItems[0])},
+                 { "<BIRTHDAY>",dateTimePicker1.Value.ToString("dd/MM/yyyy") },
+            };
 
-            //    };
+            WorkForm workForm = new WorkForm(ref items);
+            workForm.Show();
+            this.Hide();
 
-
-
-            //    helper.Process(items);
             //}
             //else
             //{
