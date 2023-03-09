@@ -31,7 +31,7 @@ namespace CreateResume
             bool b = true;
             for (int i = 0; i < textBoxes.Length; i++)
             {
-                if (textBoxes[i].Text != null)
+                if (textBoxes[i].Text != null && textBoxes[i].Text.Length!=1)
                 {
                     continue;
                 }

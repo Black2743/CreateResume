@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CreateResume
 {
-    
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -63,6 +63,9 @@ namespace CreateResume
         {
             var openAiKey = "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";
             var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
+            this.Hide();
+         
+            MessageBox.Show("ОЖИДАЙТЕ");
             try
             {
                 using (var httpClient = new HttpClient())
@@ -149,33 +152,28 @@ namespace CreateResume
         private async void button1_Click(object sender, EventArgs e)
         {
 
-
-            //if (ReadyToContinue())
-            //{
-           
-
-            
-            var items = new Dictionary<String, String>
+            if (ReadyToContinue())
             {
-                 { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
-                 { "<PHONE>",PhoneNomber_textBox.Text},
-                 { "<EMAIL>",Email_textBox.Text},
-                 { "<COUNTRY>",(string)Country_checkedListBox.CheckedItems[0]},
-                 { "<EDUCATIO_TYPE>",(string)Education_checkedListBox.CheckedItems[0]},
-                 { "<EXPIRIENSE>",await MethodOfWriting((string)FillMethod_checkedListBox.CheckedItems[0])},
-                 { "<BIRTHDAY>",dateTimePicker1.Value.ToString("dd/MM/yyyy") },
-            };
-
-            WorkForm workForm = new WorkForm(ref items);
-            workForm.Show();
-            this.Hide();
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("NOT");
-            //}
-
+                var items = new Dictionary<String, String>
+                {
+                    { "<NAME_SURNAME_PATRONOMIC>", NameSurnamePatronomic_textBox.Text},
+                    { "<PHONE>",PhoneNomber_textBox.Text},
+                    { "<EMAIL>",Email_textBox.Text},
+                    { "<COUNTRY>",(string)Country_checkedListBox.CheckedItems[0]},
+                    { "<EDUCATIO_TYPE>",(string)Education_checkedListBox.CheckedItems[0]},
+                    { "<BIRTHDAY>",dateTimePicker1.Value.ToString("dd/MM/yyyy") },
+                };
+                String s=await MethodOfWriting((string)FillMethod_checkedListBox.CheckedItems[0]);
+                if (s == null || s=="")
+                {
+                    return;
+                }
+                items.Add("<EXPIRIENSE>", s);
+                WorkForm workForm = new WorkForm(ref items);
+                workForm.Show();
+                this.Hide();
+                
+            }
         }
         private String GetAllInFile(ref String filePath, ref String fileType)
         {
@@ -245,7 +243,7 @@ namespace CreateResume
             if (size == 13)
             {
                 string result = Show("Введите ваши навыки:", "Автоматически");
-                String strMessage = "напиши резюме для " + NameSurnamePatronomic_textBox.Text + " с навыками " + result;
+                String strMessage = "напиши в 3 предложения резюме для человека с навыками " + result;
                 var answer = await callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
                 return await System.Threading.Tasks.Task.FromResult(answer);
             }
@@ -254,8 +252,6 @@ namespace CreateResume
                 string result = Show("Введите информацию о себе:", "О себе");
                 return await System.Threading.Tasks.Task.FromResult(result);
             }
-
-
             String? filePath = null;
             String? fileContent = null;
             String fileType = OpenFileDialogAndGetFileType(filePath: ref filePath);

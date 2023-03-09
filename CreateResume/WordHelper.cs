@@ -1,4 +1,6 @@
-﻿namespace CreateResume
+﻿using Microsoft.Office.Interop.Word;
+
+namespace CreateResume
 {
     internal class WordHelper
     {
@@ -21,10 +23,39 @@
                 Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
                 Object file = _fileInfo.FullName;
                 Object missing = Type.Missing;
+
                 app.Documents.Open(file);
+                Microsoft.Office.Interop.Word.Find find = app.Selection.Find;
                 foreach (var item in items)
                 {
-                    Microsoft.Office.Interop.Word.Find find = app.Selection.Find;
+                    if(item.Key == "<EXPIRIENSE>")
+                    {
+                        find.Text = "<EXPIRIENSE>";
+                        find.Forward = true;
+                        find.Wrap = WdFindWrap.wdFindContinue;
+                        find.Format = false;
+                        find.MatchCase = false;
+                        find.MatchWholeWord = false;
+                        find.MatchWildcards = false;
+                        find.MatchSoundsLike = false;
+                        find.MatchAllWordForms = false;
+
+                        // Разбиваем очень большой текст на части
+                        string[] parts = item.Value.Split(' ');
+                        for (int i = 0; i < parts.Length; i++)
+                        {
+                            parts[i] = parts[i]+ " <EXPIRIENSE>";
+                        }
+
+                        foreach (string part in parts)
+                        {
+                            find.Replacement.Text = part;
+                            find.Execute(Replace: WdReplace.wdReplaceOne);
+                        }
+
+                        continue;
+                    }
+                   
                     find.Text = item.Key;
                     find.Replacement.Text = item.Value;
 
@@ -35,7 +66,7 @@
                    
 
                 }
-                Object newFile = Path.Combine(_fileInfo.DirectoryName,DateTime.Now.ToString("yyyyMMdd HHmmss")+_fileInfo.Name);
+                Object newFile = Path.Combine(_fileInfo.DirectoryName, items["<NAME_SURNAME_PATRONOMIC>"]);
                 app.ActiveDocument.SaveAs2(newFile);
                 app.ActiveDocument.Close();
                 app.Quit();
@@ -43,7 +74,7 @@
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.ToString());
             }
         }
     }

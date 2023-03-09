@@ -61,6 +61,7 @@
             this.textBoxWorkPosition.Name = "textBoxWorkPosition";
             this.textBoxWorkPosition.Size = new System.Drawing.Size(565, 27);
             this.textBoxWorkPosition.TabIndex = 1;
+            this.textBoxWorkPosition.Text = " ";
             // 
             // labelCompanyName
             // 
@@ -109,6 +110,7 @@
             this.textBoxCompanyName.Name = "textBoxCompanyName";
             this.textBoxCompanyName.Size = new System.Drawing.Size(565, 27);
             this.textBoxCompanyName.TabIndex = 6;
+            this.textBoxCompanyName.Text = " ";
             // 
             // textBoxCompanyLocation
             // 
@@ -117,6 +119,7 @@
             this.textBoxCompanyLocation.Name = "textBoxCompanyLocation";
             this.textBoxCompanyLocation.Size = new System.Drawing.Size(565, 27);
             this.textBoxCompanyLocation.TabIndex = 7;
+            this.textBoxCompanyLocation.Text = " ";
             // 
             // textBoxCompanyExpiriense
             // 
@@ -126,6 +129,7 @@
             this.textBoxCompanyExpiriense.Name = "textBoxCompanyExpiriense";
             this.textBoxCompanyExpiriense.Size = new System.Drawing.Size(565, 131);
             this.textBoxCompanyExpiriense.TabIndex = 8;
+            this.textBoxCompanyExpiriense.Text = " ";
             // 
             // dateTimePickerWorkEnd
             // 

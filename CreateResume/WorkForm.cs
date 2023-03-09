@@ -8,60 +8,61 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Reflection.Emit;
 
 namespace CreateResume
 {
     public partial class WorkForm : Form
     {
         Dictionary<String, String> pairs;
-        bool b = false;
-        public WorkForm(ref Dictionary<String,String> pairs)
+
+        bool b = true;
+        public WorkForm(ref Dictionary<String, String> pairs)
         {
             InitializeComponent();
             this.pairs = pairs;
-        }
 
-        public WorkForm(String label1, String label2, String label3,String label4,String label5,String FormName, ref Dictionary<String, String> pairs)
-        {
-            InitializeComponent();
-            labelWorkPosition.Text = label1;
-            labelCompanyName.Text = label2;
-            labelCompanyLocation.Text = label3;
-            labelCompanyExpiriense.Text = label4;
-            labelWorkTime.Text = label5;
-            this.Text = FormName;
-            this.pairs = pairs;
-            this.b = true;
         }
-
         private void WorkForm_Load(object sender, EventArgs e)
         {
 
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            Dictionary<String, String> items=null;
-            if (b)
+            if (CheckField.CheckedTextBoxToFillIn(textBoxCompanyExpiriense, textBoxCompanyLocation, textBoxCompanyName, textBoxWorkPosition))
             {
-                items = NewDictionaryForWork();
-                pairs = pairs.Concat(items).ToDictionary(x => x.Key, x => x.Value);
-                WorkForm workForm = new WorkForm("Название", "Тип", "Специализация", "Местонахождение", "Время учебы", "Образование", ref pairs);
-                workForm.Show();
-                
+                Dictionary<String, String> items = null;
+                if (b)
+                {
+                    b = false;
+                    items = NewDictionaryForWork();
+                    pairs = pairs.Concat(items).ToDictionary(x => x.Key, x => x.Value);
+                    labelWorkPosition.Text = "Название";
+                    labelCompanyName.Text = "Тип";
+                    labelCompanyLocation.Text = "Специализация";
+                    labelCompanyExpiriense.Text = "Местонахождение";
+                    labelWorkTime.Text = "Время учебы";
+                    this.Text = "Образование";
+                    textBoxCompanyExpiriense.Text =" ";
+                    textBoxCompanyLocation.Text = " ";
+                    textBoxCompanyName.Text = " ";
+                    textBoxWorkPosition.Text = " ";
+                }
+                else
+                {
+                    items = NewDictionaryForEducation();
+                    var helper = new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
+                    pairs = pairs.Concat(items).ToDictionary(x => x.Key, x => x.Value);
+                    helper.Process(pairs);
+                    
+                    Form1 form1 = new Form1();
+                    form1.Show();
+                    this.Close();
+                }
             }
-            else
-            {
-                items = NewDictionaryForEducation();
-                var helper = new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
-                pairs = pairs.Concat(items).ToDictionary(x => x.Key, x => x.Value);
-                helper.Process(pairs);
-                this.Close();
-            }
-           
-          
         }
-        private Dictionary<String,String> NewDictionaryForWork()
+        private Dictionary<String, String> NewDictionaryForWork()
         {
             var items = new Dictionary<String, String>()
             {
