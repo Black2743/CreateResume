@@ -55,6 +55,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -71,6 +79,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -230,7 +246,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup Resume"
         "ProductCode" = "8:{2A7CD9F2-60EA-42DA-B1F8-42AD429F50F7}"
-        "PackageCode" = "8:{D8DAF3A0-660B-4469-B7DC-02A166654CC6}"
+        "PackageCode" = "8:{CFE2403A-48A8-4333-BCD3-47976FC172CB}"
         "UpgradeCode" = "8:{C908C056-7560-4B59-8177-266E6F6ADA29}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
