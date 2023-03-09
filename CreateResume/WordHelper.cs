@@ -1,5 +1,5 @@
 ﻿using Microsoft.Office.Interop.Word;
-
+using System.Diagnostics;
 namespace CreateResume
 {
     internal class WordHelper
@@ -18,9 +18,12 @@ namespace CreateResume
 
         internal void Process(Dictionary<string, string> items)
         {
+            String newFile;
+            bool closeOrNot = false;
+            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
             try
             {
-                Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+               
                 Object file = _fileInfo.FullName;
                 Object missing = Type.Missing;
 
@@ -66,16 +69,25 @@ namespace CreateResume
                    
 
                 }
-                Object newFile = Path.Combine(_fileInfo.DirectoryName, items["<NAME_SURNAME_PATRONOMIC>"]);
+               
+                newFile = Path.Combine(_fileInfo.DirectoryName, items["<NAME_SURNAME_PATRONOMIC>"]);
                 app.ActiveDocument.SaveAs2(newFile);
                 app.ActiveDocument.Close();
                 app.Quit();
+                closeOrNot = true;
+                MessageBox.Show("Файл был успешно сохранен в каталоге " + _fileInfo.DirectoryName+". К сожалению файл через программу открыть нельзя из соображений безопасности. Спасибо за понимание");
+              
+                // Открываем документ
+                
             }
-
             catch (Exception ex)
             {
+                
                 MessageBox.Show(ex.ToString());
+                if(!closeOrNot) app.ActiveDocument.Close();
+                return;
             }
+
         }
     }
 }
