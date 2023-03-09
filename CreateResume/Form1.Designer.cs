@@ -233,8 +233,7 @@
             this.FillMethod_checkedListBox.FormattingEnabled = true;
             this.FillMethod_checkedListBox.Items.AddRange(new object[] {
             "Автоматически",
-            "Вручную",
-            "Из файла(*.docx,*.txt)"});
+            "Вручную"});
             this.FillMethod_checkedListBox.Location = new System.Drawing.Point(230, 363);
             this.FillMethod_checkedListBox.Name = "FillMethod_checkedListBox";
             this.FillMethod_checkedListBox.Size = new System.Drawing.Size(676, 70);

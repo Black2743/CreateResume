@@ -61,44 +61,49 @@ namespace CreateResume
         }
         private async Task<string> callOpenAI(int tokens, string input, string engine, double temperature, int topP, int frequencyPenalty, int presencePenalty)
         {
-            var openAiKey = "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";
-            var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
             this.Hide();
-         
             MessageBox.Show("ОЖИДАЙТЕ");
+            String[] openAiKey = new string[] { "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", "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", "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" };
+            int i = 0;
+            String apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
+            
             try
-            {
-                using (var httpClient = new HttpClient())
+            { 
+                while (i < openAiKey.Length)
                 {
-                    using (var request = new HttpRequestMessage(new HttpMethod("POST"), apiCall))
+                    using (var httpClient = new HttpClient())
                     {
-                        if (openAiKey != null)
+                        using (var request = new HttpRequestMessage(new HttpMethod("POST"), apiCall))
                         {
-                            request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + openAiKey);
-                        }
-                        else
-                        {
-                            return await System.Threading.Tasks.Task.FromResult("openAiKey is null. Cannot perform runtime binding.");
+                            request.Headers.TryAddWithoutValidation("Authorization", "Bearer " + openAiKey[i]);
+                            if (input != null)
+                            {
+                                request.Content = new StringContent("{\n  \"prompt\": \"" + input + "\",\n  \"temperature\": " +
+                                                                    temperature.ToString(CultureInfo.InvariantCulture) + ",\n  \"max_tokens\": " + tokens + ",\n  \"top_p\": " + topP +
+                                                                    ",\n  \"frequency_penalty\": " + frequencyPenalty + ",\n  \"presence_penalty\": " + presencePenalty + "\n}");
+                                request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                            }
+                            else
+                            {
+                                return await System.Threading.Tasks.Task.FromResult("Input is null. Cannot perform runtime binding.");
 
-                        }
-                        if (input != null)
-                        {
-                            request.Content = new StringContent("{\n  \"prompt\": \"" + input + "\",\n  \"temperature\": " +
-                                                                temperature.ToString(CultureInfo.InvariantCulture) + ",\n  \"max_tokens\": " + tokens + ",\n  \"top_p\": " + topP +
-                                                                ",\n  \"frequency_penalty\": " + frequencyPenalty + ",\n  \"presence_penalty\": " + presencePenalty + "\n}");
-                            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                        }
-                        else
-                        {
-                            return await System.Threading.Tasks.Task.FromResult("input is null. Cannot perform runtime binding.");
-
-                        }
-                        var response = System.Threading.Tasks.Task.FromResult(await httpClient.SendAsync(request)).Result;
-                        var json = response.Content.ReadAsStringAsync().Result;
-                        dynamic dynObj = JsonConvert.DeserializeObject(json);
-                        if (dynObj != null)
-                        {
-                            return dynObj.choices[0].text.ToString();
+                            }
+                            var response = System.Threading.Tasks.Task.FromResult(await httpClient.SendAsync(request)).Result;
+                            if (response.IsSuccessStatusCode == false)
+                            {
+                                i++;
+                                continue;
+                            }
+                            else if(response.IsSuccessStatusCode==false && i == openAiKey.Length - 1)
+                            {
+                                return "OpenAI недоступен, введите информацию вручную";
+                            }
+                            var json = response.Content.ReadAsStringAsync().Result;
+                            dynamic dynObj = JsonConvert.DeserializeObject(json);
+                            if (dynObj != null)
+                            {
+                                return dynObj.choices[0].text.ToString();
+                            }
                         }
                     }
                 }
