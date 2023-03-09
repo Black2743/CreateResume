@@ -61,7 +61,7 @@ namespace CreateResume
         }
         private async Task<string> callOpenAI(int tokens, string input, string engine, double temperature, int topP, int frequencyPenalty, int presencePenalty)
         {
-            var openAiKey = "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";
+            var openAiKey = "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";
             var apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
             this.Hide();
          
