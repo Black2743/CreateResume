@@ -27,6 +27,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_748ED1323E9A4638BB8F07062CB93BB9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FC7B610A01974B50B5D149B2270F331B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -82,6 +88,16 @@
         {
             "LaunchCondition"
             {
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_ED7CCDFA81B244EBBC792E45F318CA88"
+                {
+                "Name" = "8:.NET Core"
+                "Message" = "8:[VSDNETCOREMSG]"
+                "AllowLaterVersions" = "11:FALSE"
+                "InstallUrl" = "8:https://dotnet.microsoft.com/download/dotnet-core/[NetCoreVerMajorDotMinor]"
+                "IsNETCore" = "11:TRUE"
+                "Architecture" = "2:0"
+                "Runtime" = "2:0"
+                }
             }
         }
         "File"
@@ -91,7 +107,27 @@
             "SourcePath" = "8:..\\CreateResume\\bin\\Debug\\net6.0-windows\\CreateResume.exe"
             "TargetName" = "8:CreateResume.exe"
             "Tag" = "8:"
-            "Folder" = "8:_C774983A490C4536A6ECBA891C3576F3"
+            "Folder" = "8:_D5BB4F7C78674C0A8777E44A6C754134"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_748ED1323E9A4638BB8F07062CB93BB9"
+            {
+            "SourcePath" = "8:..\\CreateResume\\file.ico"
+            "TargetName" = "8:file.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_D5BB4F7C78674C0A8777E44A6C754134"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -111,7 +147,7 @@
             "SourcePath" = "8:..\\CreateResume\\bin\\Debug\\net6.0-windows\\resume.docx"
             "TargetName" = "8:resume.docx"
             "Tag" = "8:"
-            "Folder" = "8:_C774983A490C4536A6ECBA891C3576F3"
+            "Folder" = "8:_D5BB4F7C78674C0A8777E44A6C754134"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -153,6 +189,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_D5BB4F7C78674C0A8777E44A6C754134"
+                    {
+                    "Name" = "8:Resume"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_BF16B05AAF25446F8868F794C0D39733"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_E0305F3EC1064767B69CF487B808184D"
@@ -183,7 +230,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup Resume"
         "ProductCode" = "8:{2A7CD9F2-60EA-42DA-B1F8-42AD429F50F7}"
-        "PackageCode" = "8:{FCE20F89-E10E-4248-8062-A77795724E03}"
+        "PackageCode" = "8:{D8DAF3A0-660B-4469-B7DC-02A166654CC6}"
         "UpgradeCode" = "8:{C908C056-7560-4B59-8177-266E6F6ADA29}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -721,7 +768,7 @@
             "SourcePath" = "8:..\\CreateResume\\obj\\Debug\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_C774983A490C4536A6ECBA891C3576F3"
+            "Folder" = "8:_D5BB4F7C78674C0A8777E44A6C754134"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
