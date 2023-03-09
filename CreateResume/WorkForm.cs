@@ -52,7 +52,7 @@ namespace CreateResume
                 else
                 {
                     items = NewDictionaryForEducation();
-                    var helper = new WordHelper("C:\\Users\\gadzi\\OneDrive\\Рабочий стол\\resume.docx");
+                    var helper = new WordHelper("resume.docx");
                     pairs = pairs.Concat(items).ToDictionary(x => x.Key, x => x.Value);
                     helper.Process(pairs);
                     
