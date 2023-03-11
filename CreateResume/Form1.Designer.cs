@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.Email_textBox = new System.Windows.Forms.TextBox();
             this.PhoneNomber_textBox = new System.Windows.Forms.TextBox();
@@ -233,7 +232,8 @@
             this.FillMethod_checkedListBox.FormattingEnabled = true;
             this.FillMethod_checkedListBox.Items.AddRange(new object[] {
             "Автоматически",
-            "Вручную"});
+            "Вручную",
+            "Из файла(*.docx,*.txt)"});
             this.FillMethod_checkedListBox.Location = new System.Drawing.Point(230, 363);
             this.FillMethod_checkedListBox.Name = "FillMethod_checkedListBox";
             this.FillMethod_checkedListBox.Size = new System.Drawing.Size(676, 70);
@@ -275,13 +275,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(909, 545);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon("file.ico");
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            
 
         }
 

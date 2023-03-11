@@ -63,7 +63,7 @@ namespace CreateResume
         {
             this.Hide();
             MessageBox.Show("ОЖИДАЙТЕ");
-            String[] openAiKey = new string[] { "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", "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", "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" };
+            String[] openAiKey = new string[] { "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" };
             int i = 0;
             String apiCall = "https://api.openai.com/v1/engines/" + engine + "/completions";
             
@@ -135,7 +135,7 @@ namespace CreateResume
         {
             Form promptForm = new Form() { Width = 500, Height = 400 };
             promptForm.Text = caption;
-            Label promptLabel = new Label() { Left = 50, Top = 20, Text = prompt };
+            Label promptLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = prompt };
             TextBox inputBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 200, Text = defaultValue, Multiline = true };
             Button okButton = new Button() { Text = "ОК", Left = 250, Width = 100, Height = 50, Top = 280 };
             Button cancelButton = new Button() { Text = "Отмена", Left = 360, Width = 100, Height = 50, Top = 280 };
@@ -247,7 +247,7 @@ namespace CreateResume
             int size = method.Length;
             if (size == 13)
             {
-                string result = Show("Введите ваши навыки:", "Автоматически");
+                string result = Show("Автоматически", "Введите ваши навыки:");
                 String strMessage = "напиши в 3 предложения резюме для человека с навыками " + result;
                 var answer = await callOpenAI(1000, strMessage, "text-davinci-003", 0.9, 1, 0, 0);
                 return await System.Threading.Tasks.Task.FromResult(answer);
